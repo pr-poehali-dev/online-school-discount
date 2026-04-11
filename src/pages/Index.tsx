@@ -1,14 +1,547 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import Icon from "@/components/ui/icon";
 
-const Index = () => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4 color-black text-black">Добро пожаловать!</h1>
-        <p className="text-xl text-gray-600">тут будет отображаться ваш проект</p>
-      </div>
-    </div>
-  );
+const NAV_LINKS = [
+  { label: "Главная", href: "#hero" },
+  { label: "Курсы", href: "#courses" },
+  { label: "Скидки", href: "#discount" },
+  { label: "Отзывы", href: "#reviews" },
+  { label: "О нас", href: "#about" },
+  { label: "Контакты", href: "#contacts" },
+];
+
+const COURSES = [
+  {
+    emoji: "🐍",
+    title: "Python-разработка",
+    age: "12–17 лет",
+    duration: "8 месяцев",
+    desc: "Основы программирования, алгоритмы, создание первых проектов на Python.",
+    color: "#4ADE80",
+  },
+  {
+    emoji: "🌐",
+    title: "Веб-разработка",
+    age: "11–17 лет",
+    duration: "6 месяцев",
+    desc: "HTML, CSS, JavaScript — создаём настоящие сайты с нуля до результата.",
+    color: "#FFD700",
+  },
+  {
+    emoji: "🤖",
+    title: "Робототехника",
+    age: "7–12 лет",
+    duration: "10 месяцев",
+    desc: "Lego Mindstorms, Arduino. Собираем роботов и программируем их движение.",
+    color: "#FF8C42",
+  },
+  {
+    emoji: "🎮",
+    title: "Разработка игр",
+    age: "10–16 лет",
+    duration: "7 месяцев",
+    desc: "Unity, C# — создаём 2D и 3D игры, участвуем в джемах.",
+    color: "#C084FC",
+  },
+  {
+    emoji: "🧠",
+    title: "Искусственный интеллект",
+    age: "14–17 лет",
+    duration: "5 месяцев",
+    desc: "Машинное обучение, нейросети, основы Data Science для школьников.",
+    color: "#38BDF8",
+  },
+  {
+    emoji: "🔐",
+    title: "Кибербезопасность",
+    age: "13–17 лет",
+    duration: "4 месяца",
+    desc: "Основы защиты данных, этичный хакинг, сетевая безопасность.",
+    color: "#FB7185",
+  },
+];
+
+const REVIEWS = [
+  {
+    name: "Анна М.",
+    role: "Мама ученика, 13 лет",
+    text: "Сын не мог оторваться от занятий! За 3 месяца сделал первый сайт — мы все были в шоке. Преподаватели объясняют так, что понятно даже мне.",
+    stars: 5,
+  },
+  {
+    name: "Кирилл Д.",
+    role: "Ученик, 15 лет",
+    text: "Лучшая школа! Научился Python, теперь делаю ботов для Telegram. Уже думаю об IT-карьере.",
+    stars: 5,
+  },
+  {
+    name: "Светлана Р.",
+    role: "Мама ученицы, 11 лет",
+    text: "Дочь занимается робототехникой второй год. Стала призёром городской олимпиады. Очень благодарны команде Квантастики!",
+    stars: 5,
+  },
+  {
+    name: "Тимур К.",
+    role: "Ученик, 14 лет",
+    text: "Крутые курсы по играм. Понял, что геймдев — это сложно, но невероятно интересно. Сделал свою первую 2D-игру!",
+    stars: 5,
+  },
+];
+
+const DISCOUNT_DB: Record<string, number> = {
+  "иванов иван иванович 42": 20,
+  "петрова мария сергеевна 7": 15,
+  "сидоров алексей 15": 10,
+  "козлова дарья 33": 25,
 };
 
-export default Index;
+export default function Index() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [schoolNum, setSchoolNum] = useState("");
+  const [discountResult, setDiscountResult] = useState<null | "found" | "not_found">(null);
+  const [discountValue, setDiscountValue] = useState(0);
+
+  const checkDiscount = () => {
+    const key = `${lastName.toLowerCase()} ${firstName.toLowerCase()} ${schoolNum}`.trim();
+    const found = DISCOUNT_DB[key];
+    if (found) {
+      setDiscountValue(found);
+      setDiscountResult("found");
+    } else {
+      setDiscountResult("not_found");
+    }
+  };
+
+  return (
+    <div className="min-h-screen" style={{ fontFamily: "'Golos Text', sans-serif" }}>
+      {/* ─── NAVBAR ─────────────────────────────────────────────── */}
+      <nav className="fixed top-0 left-0 right-0 z-50 hero-bg shadow-lg">
+        <div className="max-w-6xl mx-auto px-4 md:px-8 flex items-center justify-between h-16">
+          <a href="#hero" className="flex items-center gap-2">
+            <span className="text-2xl font-black tracking-tight text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>
+              🧠 КВАНТАСТИКА
+            </span>
+          </a>
+
+          <ul className="hidden md:flex gap-6">
+            {NAV_LINKS.map((l) => (
+              <li key={l.href}>
+                <a href={l.href} className="nav-link text-white/90 hover:text-white text-sm font-medium">
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <a
+            href="#contacts"
+            className="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full font-semibold text-sm transition-all hover:scale-105 active:scale-95"
+            style={{ background: "var(--kvan-yellow)", color: "var(--kvan-text-dark)" }}
+          >
+            Записаться
+          </a>
+
+          <button className="md:hidden text-white" onClick={() => setMenuOpen(!menuOpen)}>
+            <Icon name={menuOpen ? "X" : "Menu"} size={24} />
+          </button>
+        </div>
+
+        {menuOpen && (
+          <div className="md:hidden hero-bg border-t border-white/20 px-4 pb-4">
+            {NAV_LINKS.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={() => setMenuOpen(false)}
+                className="block py-3 text-white font-medium border-b border-white/10"
+              >
+                {l.label}
+              </a>
+            ))}
+            <a
+              href="#contacts"
+              onClick={() => setMenuOpen(false)}
+              className="mt-3 block text-center px-5 py-2 rounded-full font-semibold text-sm"
+              style={{ background: "var(--kvan-yellow)", color: "var(--kvan-text-dark)" }}
+            >
+              Записаться
+            </a>
+          </div>
+        )}
+      </nav>
+
+      {/* ─── HERO ───────────────────────────────────────────────── */}
+      <section id="hero" className="relative min-h-screen flex items-center overflow-hidden" style={{ paddingTop: 64 }}>
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url('https://cdn.poehali.dev/files/49f04b94-3b22-4d22-886f-79c923cc8db9.jpg')` }}
+        />
+        <div className="absolute inset-0" style={{ background: "rgba(80, 90, 210, 0.5)" }} />
+
+        <div className="relative max-w-6xl mx-auto px-4 md:px-8 py-20 md:py-32">
+          <div className="max-w-2xl">
+            <div
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold mb-6 animate-fade-up"
+              style={{ background: "var(--kvan-yellow)", color: "var(--kvan-text-dark)" }}
+            >
+              <span className="pulse-dot w-2 h-2 rounded-full bg-green-500 inline-block" />
+              Набор открыт — 2026
+            </div>
+
+            <h1
+              className="text-5xl md:text-7xl font-black text-white leading-tight mb-6 animate-fade-up delay-100"
+              style={{ fontFamily: "'Oswald', sans-serif", textShadow: "0 4px 24px rgba(0,0,0,0.3)" }}
+            >
+              ШКОЛА<br />
+              <span style={{ color: "var(--kvan-yellow)" }}>ПРОГРАММИРОВАНИЯ</span><br />
+              ДЛЯ ДЕТЕЙ
+            </h1>
+
+            <p className="text-xl text-white/90 mb-10 leading-relaxed animate-fade-up delay-200">
+              Твой ребёнок научится создавать сайты, игры и роботов.<br />
+              Без скучной теории — только живые проекты.
+            </p>
+
+            <div className="flex flex-wrap gap-4 animate-fade-up delay-300">
+              <a
+                href="#courses"
+                className="px-8 py-4 rounded-full font-bold text-lg transition-all hover:scale-105 active:scale-95 shadow-xl"
+                style={{ background: "var(--kvan-yellow)", color: "var(--kvan-text-dark)" }}
+              >
+                Смотреть курсы
+              </a>
+              <a
+                href="#discount"
+                className="px-8 py-4 rounded-full font-bold text-lg border-2 border-white text-white transition-all hover:bg-white/10"
+              >
+                Проверить скидку
+              </a>
+            </div>
+
+            <div className="flex flex-wrap gap-8 mt-14 animate-fade-up delay-400">
+              {[
+                { n: "500+", label: "учеников" },
+                { n: "6", label: "направлений" },
+                { n: "3 года", label: "на рынке" },
+              ].map((s) => (
+                <div key={s.label}>
+                  <div className="text-3xl font-black text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>{s.n}</div>
+                  <div className="text-white/70 text-sm">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── COURSES ────────────────────────────────────────────── */}
+      <section id="courses" className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <div className="text-center mb-14">
+            <span className="text-sm font-semibold px-4 py-1.5 rounded-full" style={{ background: "var(--kvan-light)", color: "var(--kvan-blue-dark)" }}>
+              Наши программы
+            </span>
+            <h2 className="text-4xl md:text-5xl font-black mt-4 mb-4" style={{ fontFamily: "'Oswald', sans-serif", color: "var(--kvan-text-dark)" }}>
+              КУРСЫ
+            </h2>
+            <p className="text-gray-500 max-w-xl mx-auto">
+              Выберите направление по интересу ребёнка. Все курсы ведут опытные преподаватели-практики.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {COURSES.map((c) => (
+              <div key={c.title} className="course-card rounded-2xl p-6 border border-gray-100 bg-white shadow-sm">
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl mb-4" style={{ background: c.color + "22" }}>
+                  {c.emoji}
+                </div>
+                <h3 className="text-lg font-bold mb-2" style={{ color: "var(--kvan-text-dark)" }}>{c.title}</h3>
+                <div className="flex gap-2 mb-3 flex-wrap">
+                  <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ background: c.color + "22", color: "var(--kvan-text-dark)" }}>
+                    👤 {c.age}
+                  </span>
+                  <span className="text-xs px-2 py-1 rounded-full font-medium bg-gray-100 text-gray-600">
+                    🕐 {c.duration}
+                  </span>
+                </div>
+                <p className="text-gray-500 text-sm leading-relaxed">{c.desc}</p>
+                <button
+                  className="mt-5 w-full py-2.5 rounded-xl font-semibold text-sm transition-all hover:opacity-90 active:scale-95"
+                  style={{ background: c.color, color: "var(--kvan-text-dark)" }}
+                >
+                  Записаться на курс
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── DISCOUNT ───────────────────────────────────────────── */}
+      <section id="discount" className="py-20" style={{ background: "var(--kvan-light)" }}>
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <div className="text-center mb-12">
+            <span className="text-sm font-semibold px-4 py-1.5 rounded-full" style={{ background: "var(--kvan-blue-dark)", color: "#fff" }}>
+              Специальное предложение
+            </span>
+            <h2 className="text-4xl md:text-5xl font-black mt-4 mb-4" style={{ fontFamily: "'Oswald', sans-serif", color: "var(--kvan-text-dark)" }}>
+              ПРОВЕРИТЬ СКИДКУ
+            </h2>
+            <p className="text-gray-500 max-w-xl mx-auto">
+              Введите фамилию и имя ребёнка, а также номер школы — мы покажем размер вашей персональной скидки.
+            </p>
+          </div>
+
+          <div className="max-w-lg mx-auto">
+            <div className="bg-white rounded-3xl shadow-xl p-8 md:p-10">
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold mb-2" style={{ color: "var(--kvan-text-dark)" }}>Фамилия</label>
+                  <input
+                    type="text"
+                    placeholder="Иванов"
+                    value={lastName}
+                    onChange={(e) => { setLastName(e.target.value); setDiscountResult(null); }}
+                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2" style={{ color: "var(--kvan-text-dark)" }}>Имя</label>
+                  <input
+                    type="text"
+                    placeholder="Иван"
+                    value={firstName}
+                    onChange={(e) => { setFirstName(e.target.value); setDiscountResult(null); }}
+                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2" style={{ color: "var(--kvan-text-dark)" }}>Номер школы</label>
+                  <input
+                    type="text"
+                    placeholder="42"
+                    value={schoolNum}
+                    onChange={(e) => { setSchoolNum(e.target.value); setDiscountResult(null); }}
+                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
+                  />
+                </div>
+                <button
+                  onClick={checkDiscount}
+                  disabled={!firstName || !lastName || !schoolNum}
+                  className="w-full py-4 rounded-xl font-bold text-lg transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+                  style={{ background: "var(--kvan-blue-dark)", color: "#fff" }}
+                >
+                  Проверить скидку 🎁
+                </button>
+              </div>
+
+              {discountResult === "found" && (
+                <div className="mt-6 p-6 rounded-2xl text-center animate-pop" style={{ background: "linear-gradient(135deg, #4ADE80 0%, #22C55E 100%)" }}>
+                  <div className="text-5xl mb-2">🎉</div>
+                  <div className="text-white text-lg font-semibold">Скидка найдена!</div>
+                  <div className="text-white text-5xl font-black my-2" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                    {discountValue}%
+                  </div>
+                  <div className="text-white/90 text-sm">
+                    Скидка применяется при записи на любой курс.<br />
+                    Свяжитесь с нами для оформления.
+                  </div>
+                </div>
+              )}
+              {discountResult === "not_found" && (
+                <div className="mt-6 p-6 rounded-2xl text-center animate-pop" style={{ background: "linear-gradient(135deg, #F9A8D4 0%, #EC4899 100%)" }}>
+                  <div className="text-4xl mb-2">🤔</div>
+                  <div className="text-white font-semibold text-lg">Скидка не найдена</div>
+                  <div className="text-white/90 text-sm mt-1">
+                    Возможно, данные введены неверно или скидка не предусмотрена для вашей школы. Свяжитесь с нами — разберёмся вместе!
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── REVIEWS ────────────────────────────────────────────── */}
+      <section id="reviews" className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <div className="text-center mb-14">
+            <span className="text-sm font-semibold px-4 py-1.5 rounded-full" style={{ background: "var(--kvan-light)", color: "var(--kvan-blue-dark)" }}>
+              Что говорят родители и ученики
+            </span>
+            <h2 className="text-4xl md:text-5xl font-black mt-4" style={{ fontFamily: "'Oswald', sans-serif", color: "var(--kvan-text-dark)" }}>
+              ОТЗЫВЫ
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {REVIEWS.map((r, i) => (
+              <div key={i} className="review-card bg-white rounded-2xl p-7 border border-gray-100 shadow-sm">
+                <div className="flex mb-3">
+                  {Array.from({ length: r.stars }).map((_, j) => (
+                    <span key={j} className="text-yellow-400 text-lg">★</span>
+                  ))}
+                </div>
+                <p className="text-gray-600 leading-relaxed mb-5 text-sm">"{r.text}"</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: "var(--kvan-blue-dark)" }}>
+                    {r.name[0]}
+                  </div>
+                  <div>
+                    <div className="font-semibold text-sm" style={{ color: "var(--kvan-text-dark)" }}>{r.name}</div>
+                    <div className="text-gray-400 text-xs">{r.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── ABOUT ──────────────────────────────────────────────── */}
+      <section id="about" className="py-20 hero-bg">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="text-sm font-semibold px-4 py-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.2)", color: "#fff" }}>
+                Кто мы
+              </span>
+              <h2 className="text-4xl md:text-5xl font-black mt-4 mb-6 text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                О НАС
+              </h2>
+              <p className="text-white/90 leading-relaxed mb-4">
+                Квантастика — образовательная школа программирования для детей и подростков от 7 до 17 лет. Мы работаем с 2021 года и за это время выпустили более 500 учеников.
+              </p>
+              <p className="text-white/90 leading-relaxed mb-8">
+                Наша миссия — сделать IT-образование живым, понятным и вдохновляющим. Каждый курс — это реальный проект, который ребёнок создаёт сам.
+              </p>
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { icon: "GraduationCap", text: "Опытные преподаватели-практики" },
+                  { icon: "Trophy", text: "Призёры олимпиад и хакатонов" },
+                  { icon: "Users", text: "Группы до 8 человек" },
+                  { icon: "Laptop", text: "Онлайн и офлайн форматы" },
+                ].map((f) => (
+                  <div key={f.text} className="flex items-start gap-3 rounded-xl p-4" style={{ background: "rgba(255,255,255,0.12)" }}>
+                    <Icon name={f.icon} fallback="Star" size={20} className="text-yellow-300 mt-0.5 shrink-0" />
+                    <span className="text-white text-sm leading-tight">{f.text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <div className="relative">
+                <div
+                  className="w-64 h-64 md:w-80 md:h-80 rounded-3xl flex items-center justify-center text-9xl"
+                  style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(12px)" }}
+                >
+                  🧠
+                </div>
+                <div
+                  className="absolute -top-4 -right-4 px-4 py-2 rounded-2xl font-bold text-sm"
+                  style={{ background: "var(--kvan-yellow)", color: "var(--kvan-text-dark)" }}
+                >
+                  Резидент Сколково
+                </div>
+                <div
+                  className="absolute -bottom-4 -left-4 px-4 py-2 rounded-2xl font-bold text-sm text-white"
+                  style={{ background: "rgba(255,255,255,0.2)", backdropFilter: "blur(8px)" }}
+                >
+                  500+ выпускников
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── CONTACTS ───────────────────────────────────────────── */}
+      <section id="contacts" className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <div className="text-center mb-14">
+            <span className="text-sm font-semibold px-4 py-1.5 rounded-full" style={{ background: "var(--kvan-light)", color: "var(--kvan-blue-dark)" }}>
+              Свяжитесь с нами
+            </span>
+            <h2 className="text-4xl md:text-5xl font-black mt-4 mb-4" style={{ fontFamily: "'Oswald', sans-serif", color: "var(--kvan-text-dark)" }}>
+              КОНТАКТЫ
+            </h2>
+            <p className="text-gray-500 max-w-lg mx-auto">
+              Оставьте заявку — мы перезвоним в течение часа и расскажем всё о курсах.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+            <div className="bg-white rounded-3xl border border-gray-100 shadow-lg p-8">
+              <h3 className="font-bold text-xl mb-6" style={{ color: "var(--kvan-text-dark)" }}>Записаться на курс</h3>
+              <div className="space-y-4">
+                <input
+                  type="text"
+                  placeholder="Ваше имя"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
+                />
+                <input
+                  type="tel"
+                  placeholder="Телефон"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
+                />
+                <select className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-500 transition-colors bg-white">
+                  <option value="">Выберите курс</option>
+                  {COURSES.map((c) => (
+                    <option key={c.title} value={c.title}>{c.emoji} {c.title}</option>
+                  ))}
+                </select>
+                <button
+                  className="w-full py-4 rounded-xl font-bold text-lg transition-all hover:scale-[1.02] active:scale-95"
+                  style={{ background: "var(--kvan-blue-dark)", color: "#fff" }}
+                >
+                  Отправить заявку
+                </button>
+                <p className="text-gray-400 text-xs text-center">
+                  Нажимая кнопку, вы соглашаетесь с обработкой персональных данных
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-5">
+              {[
+                { icon: "Phone", label: "Телефон", value: "+7 (800) 123-45-67", sub: "Бесплатно по России" },
+                { icon: "Mail", label: "Email", value: "hello@kvantastika.ru", sub: "Ответим в течение часа" },
+                { icon: "MapPin", label: "Адрес", value: "Москва, ул. Академика Королёва, 12", sub: "Пн–Сб: 9:00 – 20:00" },
+                { icon: "MessageCircle", label: "Telegram", value: "@kvantastika", sub: "Пишите в любое время" },
+              ].map((c) => (
+                <div key={c.label} className="flex items-start gap-4 p-5 rounded-2xl" style={{ background: "var(--kvan-light)" }}>
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ background: "var(--kvan-blue-dark)" }}>
+                    <Icon name={c.icon} fallback="Phone" size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-gray-500 mb-0.5">{c.label}</div>
+                    <div className="font-semibold" style={{ color: "var(--kvan-text-dark)" }}>{c.value}</div>
+                    <div className="text-xs text-gray-400">{c.sub}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── FOOTER ─────────────────────────────────────────────── */}
+      <footer className="hero-bg py-8">
+        <div className="max-w-6xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <span className="text-xl font-black text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>
+            🧠 КВАНТАСТИКА
+          </span>
+          <p className="text-white/60 text-sm">© 2026 Квантастика. Все права защищены.</p>
+          <div className="flex flex-wrap gap-4 justify-center">
+            {NAV_LINKS.map((l) => (
+              <a key={l.href} href={l.href} className="text-white/70 hover:text-white text-xs transition-colors">
+                {l.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}

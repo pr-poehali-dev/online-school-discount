@@ -427,7 +427,7 @@ export default function Index() {
 
             <div className="flex flex-wrap gap-8 mt-14 animate-fade-up delay-400">
               {[
-                { n: "2500+", label: "учеников" },
+                { n: "20000+", label: "учеников" },
                 { n: "14", label: "направлений" },
                 { n: "8 лет", label: "на рынке" },
               ].map((s) => (
@@ -709,7 +709,7 @@ export default function Index() {
                   className="absolute -bottom-4 -left-4 px-4 py-2 rounded-2xl font-bold text-sm text-white"
                   style={{ background: "rgba(255,255,255,0.2)", backdropFilter: "blur(8px)" }}
                 >
-                  2500+ выпускников
+                  20000+ выпускников
                 </div>
               </div>
             </div>

@@ -98,11 +98,30 @@ const DISCOUNT_DB: Record<string, number> = {
 export default function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const [userName, setUserName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [schoolNum, setSchoolNum] = useState("");
   const [discountResult, setDiscountResult] = useState<null | "found" | "not_found">(null);
   const [discountValue, setDiscountValue] = useState(0);
+
+  const handleLogin = () => {
+    if (loginEmail && loginPassword) {
+      setUserName(loginEmail.split("@")[0] || loginEmail);
+      setIsLoggedIn(true);
+      setLoginOpen(false);
+      setLoginEmail("");
+      setLoginPassword("");
+    }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUserName("");
+  };
 
   const checkDiscount = () => {
     const key = `${lastName.toLowerCase()} ${firstName.toLowerCase()} ${schoolNum}`.trim();
@@ -115,8 +134,169 @@ export default function Index() {
     }
   };
 
+  if (isLoggedIn) {
+    return (
+      <div className="min-h-screen" style={{ fontFamily: "'Golos Text', sans-serif", background: "var(--kvan-light)" }}>
+        {/* Личный кабинет */}
+        <nav className="hero-bg shadow-lg">
+          <div className="max-w-5xl mx-auto px-4 md:px-8 flex items-center justify-between h-16">
+            <span className="text-xl font-black text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>🧠 КВАНТАСТИКА</span>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.15)" }}>
+                <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: "var(--kvan-yellow)", color: "var(--kvan-text-dark)" }}>
+                  {userName[0]?.toUpperCase()}
+                </div>
+                <span className="text-white text-sm font-medium">{userName}</span>
+              </div>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm border border-white/30 text-white hover:bg-white/10 transition-all"
+              >
+                <Icon name="LogOut" size={14} />
+                Выйти
+              </button>
+            </div>
+          </div>
+        </nav>
+
+        <div className="max-w-5xl mx-auto px-4 md:px-8 py-10">
+          <h1 className="text-3xl font-black mb-2" style={{ fontFamily: "'Oswald', sans-serif", color: "var(--kvan-text-dark)" }}>
+            Личный кабинет
+          </h1>
+          <p className="text-gray-500 mb-8">Добро пожаловать, <b>{userName}</b>!</p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+            {[
+              { icon: "Gift", label: "Доступно грантов", value: "2", color: "#4ADE80" },
+              { icon: "Users", label: "Учеников", value: "0", color: "var(--kvan-blue)" },
+              { icon: "CheckCircle", label: "Использовано грантов", value: "1", color: "var(--kvan-orange)" },
+            ].map((s) => (
+              <div key={s.label} className="bg-white rounded-2xl p-6 shadow-sm flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: s.color + "22" }}>
+                  <Icon name={s.icon} fallback="Star" size={22} style={{ color: s.color }} />
+                </div>
+                <div>
+                  <div className="text-2xl font-black" style={{ fontFamily: "'Oswald', sans-serif", color: "var(--kvan-text-dark)" }}>{s.value}</div>
+                  <div className="text-gray-500 text-sm">{s.label}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 shadow-sm">
+            <h2 className="font-bold text-lg mb-4" style={{ color: "var(--kvan-text-dark)" }}>Проверить грант ученика</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+              <input
+                type="text"
+                placeholder="Фамилия"
+                value={lastName}
+                onChange={(e) => { setLastName(e.target.value); setDiscountResult(null); }}
+                className="px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
+              />
+              <input
+                type="text"
+                placeholder="Имя"
+                value={firstName}
+                onChange={(e) => { setFirstName(e.target.value); setDiscountResult(null); }}
+                className="px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
+              />
+              <input
+                type="text"
+                placeholder="Номер школы"
+                value={schoolNum}
+                onChange={(e) => { setSchoolNum(e.target.value); setDiscountResult(null); }}
+                className="px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
+              />
+            </div>
+            <button
+              onClick={checkDiscount}
+              disabled={!firstName || !lastName || !schoolNum}
+              className="px-8 py-3 rounded-xl font-bold transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{ background: "var(--kvan-blue-dark)", color: "#fff" }}
+            >
+              Проверить грант 🎁
+            </button>
+
+            {discountResult === "found" && (
+              <div className="mt-5 space-y-3">
+                <div className="p-5 rounded-2xl animate-pop" style={{ background: "linear-gradient(135deg, #4ADE80 0%, #22C55E 100%)" }}>
+                  <div className="text-white font-semibold text-lg">🎉 Грант найден — {discountValue}%</div>
+                  <div className="text-white/90 text-sm mt-1">Применяется при записи на любой курс.</div>
+                </div>
+                <div className="p-5 rounded-2xl border-2 animate-pop" style={{ background: "#FFF9E6", borderColor: "var(--kvan-yellow)" }}>
+                  <div className="font-bold text-sm mb-1" style={{ color: "var(--kvan-text-dark)" }}>📋 У вас осталось 2 гранта.</div>
+                  <div className="text-sm text-gray-600 mb-3">Хотите использовать для этого ученика?</div>
+                  <div className="flex gap-2">
+                    <button className="px-4 py-2 rounded-xl font-semibold text-sm transition-all hover:scale-105" style={{ background: "var(--kvan-blue-dark)", color: "#fff" }}>
+                      Да, использовать
+                    </button>
+                    <button className="px-4 py-2 rounded-xl font-semibold text-sm border-2 hover:bg-gray-50 transition-all" style={{ borderColor: "var(--kvan-blue-dark)", color: "var(--kvan-blue-dark)" }}>
+                      Нет, позже
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+            {discountResult === "not_found" && (
+              <div className="mt-5 p-5 rounded-2xl animate-pop" style={{ background: "linear-gradient(135deg, #F9A8D4 0%, #EC4899 100%)" }}>
+                <div className="text-white font-semibold">🤔 Грант не найден</div>
+                <div className="text-white/90 text-sm mt-1">Проверьте правильность введённых данных.</div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen" style={{ fontFamily: "'Golos Text', sans-serif" }}>
+      {/* ─── MODAL LOGIN ────────────────────────────────────────── */}
+      {loginOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center px-4" style={{ background: "rgba(26,31,94,0.6)", backdropFilter: "blur(6px)" }}>
+          <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-sm animate-pop">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-black" style={{ fontFamily: "'Oswald', sans-serif", color: "var(--kvan-text-dark)" }}>ВХОД</h2>
+              <button onClick={() => setLoginOpen(false)} className="text-gray-400 hover:text-gray-600 transition-colors">
+                <Icon name="X" size={20} />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold mb-2" style={{ color: "var(--kvan-text-dark)" }}>Логин</label>
+                <input
+                  type="text"
+                  placeholder="Введите логин"
+                  value={loginEmail}
+                  onChange={(e) => setLoginEmail(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
+                  autoFocus
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-2" style={{ color: "var(--kvan-text-dark)" }}>Пароль</label>
+                <input
+                  type="password"
+                  placeholder="Введите пароль"
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
+                />
+              </div>
+              <button
+                onClick={handleLogin}
+                disabled={!loginEmail || !loginPassword}
+                className="w-full py-3 rounded-xl font-bold text-base transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{ background: "var(--kvan-blue-dark)", color: "#fff" }}
+              >
+                Войти в кабинет
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {/* ─── NAVBAR ─────────────────────────────────────────────── */}
       <nav className="fixed top-0 left-0 right-0 z-50 hero-bg shadow-lg">
         <div className="max-w-6xl mx-auto px-4 md:px-8 flex items-center justify-between h-16">
@@ -137,14 +317,33 @@ export default function Index() {
           </ul>
 
           <div className="hidden md:flex items-center gap-3">
-            <button
-              onClick={() => setIsLoggedIn(!isLoggedIn)}
-              className="flex items-center gap-2 px-4 py-2 rounded-full font-semibold text-sm transition-all hover:scale-105 active:scale-95 border-2 border-white/40 hover:border-white"
-              style={{ color: "#fff" }}
-            >
-              <Icon name={isLoggedIn ? "UserCheck" : "LogIn"} size={16} />
-              {isLoggedIn ? "Выйти" : "Войти"}
-            </button>
+            {isLoggedIn ? (
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.15)" }}>
+                  <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: "var(--kvan-yellow)", color: "var(--kvan-text-dark)" }}>
+                    {userName[0]?.toUpperCase()}
+                  </div>
+                  <span className="text-white text-sm font-medium">{userName}</span>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm transition-all hover:bg-white/10 border border-white/30"
+                  style={{ color: "#fff" }}
+                >
+                  <Icon name="LogOut" size={14} />
+                  Выйти
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => setLoginOpen(true)}
+                className="flex items-center gap-2 px-4 py-2 rounded-full font-semibold text-sm transition-all hover:scale-105 active:scale-95 border-2 border-white/40 hover:border-white"
+                style={{ color: "#fff" }}
+              >
+                <Icon name="LogIn" size={16} />
+                Войти
+              </button>
+            )}
             <a
               href="#contacts"
               className="inline-flex items-center gap-2 px-5 py-2 rounded-full font-semibold text-sm transition-all hover:scale-105 active:scale-95"

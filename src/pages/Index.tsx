@@ -160,89 +160,70 @@ export default function Index() {
         </nav>
 
         <div className="max-w-5xl mx-auto px-4 md:px-8 py-10">
-          <h1 className="text-3xl font-black mb-2" style={{ fontFamily: "'Oswald', sans-serif", color: "var(--kvan-text-dark)" }}>
+          <h1 className="text-3xl font-black mb-8" style={{ fontFamily: "'Oswald', sans-serif", color: "var(--kvan-text-dark)" }}>
             Личный кабинет
           </h1>
-          <p className="text-gray-500 mb-8">Добро пожаловать, <b>{userName}</b>!</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
-            {[
-              { icon: "Gift", label: "Доступно грантов", value: "2", color: "#4ADE80" },
-              { icon: "Users", label: "Учеников", value: "0", color: "var(--kvan-blue)" },
-              { icon: "CheckCircle", label: "Использовано грантов", value: "1", color: "var(--kvan-orange)" },
-            ].map((s) => (
-              <div key={s.label} className="bg-white rounded-2xl p-6 shadow-sm flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: s.color + "22" }}>
-                  <Icon name={s.icon} fallback="Star" size={22} style={{ color: s.color }} />
-                </div>
-                <div>
-                  <div className="text-2xl font-black" style={{ fontFamily: "'Oswald', sans-serif", color: "var(--kvan-text-dark)" }}>{s.value}</div>
-                  <div className="text-gray-500 text-sm">{s.label}</div>
-                </div>
+          {/* Статистика */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
+            <div className="bg-white rounded-2xl p-6 shadow-sm flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: "#6B7FFF22" }}>
+                <Icon name="CalendarDays" fallback="Calendar" size={22} style={{ color: "var(--kvan-blue)" }} />
               </div>
-            ))}
+              <div>
+                <div className="text-xs text-gray-400 mb-0.5">Дата приёма на работу</div>
+                <div className="text-xl font-black" style={{ fontFamily: "'Oswald', sans-serif", color: "var(--kvan-text-dark)" }}>25.02.2019</div>
+              </div>
+            </div>
+            <div className="bg-white rounded-2xl p-6 shadow-sm flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: "#4ADE8022" }}>
+                <Icon name="Users" fallback="Users" size={22} style={{ color: "#4ADE80" }} />
+              </div>
+              <div>
+                <div className="text-xs text-gray-400 mb-0.5">Количество учеников</div>
+                <div className="text-xl font-black" style={{ fontFamily: "'Oswald', sans-serif", color: "var(--kvan-text-dark)" }}>8</div>
+              </div>
+            </div>
           </div>
 
+          {/* Расписание на 2 недели */}
           <div className="bg-white rounded-2xl p-6 shadow-sm">
-            <h2 className="font-bold text-lg mb-4" style={{ color: "var(--kvan-text-dark)" }}>Проверить грант ученика</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-              <input
-                type="text"
-                placeholder="Фамилия"
-                value={lastName}
-                onChange={(e) => { setLastName(e.target.value); setDiscountResult(null); }}
-                className="px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
-              />
-              <input
-                type="text"
-                placeholder="Имя"
-                value={firstName}
-                onChange={(e) => { setFirstName(e.target.value); setDiscountResult(null); }}
-                className="px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
-              />
-              <input
-                type="text"
-                placeholder="Номер школы"
-                value={schoolNum}
-                onChange={(e) => { setSchoolNum(e.target.value); setDiscountResult(null); }}
-                className="px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
-              />
-            </div>
-            <button
-              onClick={checkDiscount}
-              disabled={!firstName || !lastName || !schoolNum}
-              className="px-8 py-3 rounded-xl font-bold transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{ background: "var(--kvan-blue-dark)", color: "#fff" }}
-            >
-              Проверить грант 🎁
-            </button>
-
-            {discountResult === "found" && (
-              <div className="mt-5 space-y-3">
-                <div className="p-5 rounded-2xl animate-pop" style={{ background: "linear-gradient(135deg, #4ADE80 0%, #22C55E 100%)" }}>
-                  <div className="text-white font-semibold text-lg">🎉 Грант найден — {discountValue}%</div>
-                  <div className="text-white/90 text-sm mt-1">Применяется при записи на любой курс.</div>
-                </div>
-                <div className="p-5 rounded-2xl border-2 animate-pop" style={{ background: "#FFF9E6", borderColor: "var(--kvan-yellow)" }}>
-                  <div className="font-bold text-sm mb-1" style={{ color: "var(--kvan-text-dark)" }}>📋 У вас осталось 2 гранта.</div>
-                  <div className="text-sm text-gray-600 mb-3">Хотите использовать для этого ученика?</div>
-                  <div className="flex gap-2">
-                    <button className="px-4 py-2 rounded-xl font-semibold text-sm transition-all hover:scale-105" style={{ background: "var(--kvan-blue-dark)", color: "#fff" }}>
-                      Да, использовать
-                    </button>
-                    <button className="px-4 py-2 rounded-xl font-semibold text-sm border-2 hover:bg-gray-50 transition-all" style={{ borderColor: "var(--kvan-blue-dark)", color: "var(--kvan-blue-dark)" }}>
-                      Нет, позже
-                    </button>
+            <h2 className="font-bold text-lg mb-5 flex items-center gap-2" style={{ color: "var(--kvan-text-dark)" }}>
+              <Icon name="BookOpen" fallback="Calendar" size={20} style={{ color: "var(--kvan-blue-dark)" }} />
+              График уроков на ближайшие 2 недели
+            </h2>
+            <div className="space-y-2">
+              {[
+                { date: "14 апр, пн", lessons: [{ time: "10:00", group: "Python — Группа A", room: "Каб. 3" }, { time: "14:00", group: "Веб-разработка — Группа B", room: "Каб. 1" }] },
+                { date: "15 апр, вт", lessons: [{ time: "11:00", group: "Робототехника — Группа C", room: "Каб. 5" }] },
+                { date: "16 апр, ср", lessons: [{ time: "10:00", group: "Python — Группа A", room: "Каб. 3" }, { time: "16:00", group: "ИИ — Группа D", room: "Каб. 2" }] },
+                { date: "17 апр, чт", lessons: [{ time: "11:00", group: "Веб-разработка — Группа B", room: "Каб. 1" }] },
+                { date: "18 апр, пт", lessons: [{ time: "10:00", group: "Разработка игр — Группа E", room: "Каб. 4" }, { time: "13:00", group: "Кибербезопасность — Группа F", room: "Каб. 2" }] },
+                { date: "19 апр, сб", lessons: [{ time: "10:00", group: "Робототехника — Группа C", room: "Каб. 5" }] },
+                { date: "21 апр, пн", lessons: [{ time: "10:00", group: "Python — Группа A", room: "Каб. 3" }, { time: "14:00", group: "Веб-разработка — Группа B", room: "Каб. 1" }] },
+                { date: "22 апр, вт", lessons: [{ time: "11:00", group: "Робототехника — Группа C", room: "Каб. 5" }] },
+                { date: "23 апр, ср", lessons: [{ time: "10:00", group: "Python — Группа A", room: "Каб. 3" }, { time: "16:00", group: "ИИ — Группа D", room: "Каб. 2" }] },
+                { date: "24 апр, чт", lessons: [{ time: "11:00", group: "Веб-разработка — Группа B", room: "Каб. 1" }] },
+                { date: "25 апр, пт", lessons: [{ time: "10:00", group: "Разработка игр — Группа E", room: "Каб. 4" }, { time: "13:00", group: "Кибербезопасность — Группа F", room: "Каб. 2" }] },
+                { date: "26 апр, сб", lessons: [{ time: "10:00", group: "Робототехника — Группа C", room: "Каб. 5" }] },
+              ].map((day) => (
+                <div key={day.date} className="rounded-xl overflow-hidden border border-gray-100">
+                  <div className="px-4 py-2 flex items-center gap-2" style={{ background: "var(--kvan-light)" }}>
+                    <Icon name="Calendar" size={14} style={{ color: "var(--kvan-blue-dark)" }} />
+                    <span className="font-semibold text-sm" style={{ color: "var(--kvan-text-dark)" }}>{day.date}</span>
+                  </div>
+                  <div className="divide-y divide-gray-50">
+                    {day.lessons.map((l) => (
+                      <div key={l.time + l.group} className="px-4 py-3 flex items-center gap-4 bg-white">
+                        <span className="text-sm font-bold w-12 shrink-0" style={{ color: "var(--kvan-blue-dark)" }}>{l.time}</span>
+                        <span className="text-sm text-gray-700 flex-1">{l.group}</span>
+                        <span className="text-xs px-2 py-1 rounded-lg font-medium" style={{ background: "var(--kvan-light)", color: "var(--kvan-text-dark)" }}>{l.room}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              </div>
-            )}
-            {discountResult === "not_found" && (
-              <div className="mt-5 p-5 rounded-2xl animate-pop" style={{ background: "linear-gradient(135deg, #F9A8D4 0%, #EC4899 100%)" }}>
-                <div className="text-white font-semibold">🤔 Грант не найден</div>
-                <div className="text-white/90 text-sm mt-1">Проверьте правильность введённых данных.</div>
-              </div>
-            )}
+              ))}
+            </div>
           </div>
         </div>
       </div>

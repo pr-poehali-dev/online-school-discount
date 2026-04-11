@@ -634,11 +634,34 @@ export default function Index() {
                 </div>
               )}
               {discountResult === "not_found" && (
-                <div className="mt-6 p-6 rounded-2xl text-center animate-pop" style={{ background: "linear-gradient(135deg, #F9A8D4 0%, #EC4899 100%)" }}>
-                  <div className="text-4xl mb-2">🤔</div>
-                  <div className="text-white font-semibold text-lg">Грант не найден</div>
-                  <div className="text-white/90 text-sm mt-1">
-                    Возможно, данные введены неверно или грант не предусмотрен для вашей школы. Свяжитесь с нами — разберёмся вместе!
+                <div className="fixed inset-0 z-[200] flex items-center justify-center px-4" style={{ background: "rgba(26,31,94,0.65)", backdropFilter: "blur(6px)" }}>
+                  <div className="w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-pop">
+                    <div className="p-8 text-center" style={{ background: "linear-gradient(135deg, #F9A8D4 0%, #EC4899 100%)" }}>
+                      <div className="text-5xl mb-4">🤔</div>
+                      <div className="text-white text-2xl font-black mb-1" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                        Грант не найден
+                      </div>
+                      <div className="text-white/80 text-sm">Данные не совпадают с базой</div>
+                    </div>
+                    <div className="bg-white p-8 space-y-4">
+                      {[
+                        { label: "Ученик", value: `${lastName} ${firstName}` },
+                        { label: "Школа №", value: schoolNum },
+                      ].map((row) => (
+                        <div key={row.label} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+                          <span className="text-gray-500">{row.label}</span>
+                          <span className="font-bold" style={{ color: "var(--kvan-text-dark)" }}>{row.value}</span>
+                        </div>
+                      ))}
+                      <p className="text-gray-400 text-sm pt-1">Возможно, данные введены неверно или грант не предусмотрен для вашей школы. Свяжитесь с нами — разберёмся вместе!</p>
+                      <button
+                        onClick={() => setDiscountResult(null)}
+                        className="w-full py-3 rounded-xl font-bold text-base transition-all hover:scale-[1.02] active:scale-95"
+                        style={{ background: "var(--kvan-blue-dark)", color: "#fff" }}
+                      >
+                        Закрыть
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}

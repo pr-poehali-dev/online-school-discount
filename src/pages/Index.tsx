@@ -558,28 +558,43 @@ export default function Index() {
                     </div>
                   )}
                   {isLoggedIn && !grantUsed && (
-                    <div className="p-6 rounded-2xl animate-pop" style={{ background: "linear-gradient(135deg, #4ADE80 0%, #22C55E 100%)" }}>
-                      <div className="text-3xl mb-3">🎁</div>
-                      <div className="text-white text-xl font-black mb-1" style={{ fontFamily: "'Oswald', sans-serif" }}>
-                        Вам доступно 2 гранта!
-                      </div>
-                      <div className="text-white/90 text-sm mb-4">
-                        Использовать для этого ученика?
-                      </div>
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => setGrantUsed(true)}
-                          className="px-5 py-2.5 rounded-xl font-semibold text-sm transition-all hover:scale-105 active:scale-95"
-                          style={{ background: "#fff", color: "#22C55E" }}
-                        >
-                          Да, использовать
-                        </button>
-                        <button
-                          onClick={() => setDiscountResult(null)}
-                          className="px-5 py-2.5 rounded-xl font-semibold text-sm border-2 border-white/50 text-white transition-all hover:bg-white/10"
-                        >
-                          Нет, позже
-                        </button>
+                    <div className="fixed inset-0 z-[200] flex items-center justify-center px-4" style={{ background: "rgba(26,31,94,0.65)", backdropFilter: "blur(6px)" }}>
+                      <div className="w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-pop">
+                        <div className="p-8 text-center" style={{ background: "linear-gradient(135deg, #4ADE80 0%, #22C55E 100%)" }}>
+                          <div className="text-5xl mb-4">🎁</div>
+                          <div className="text-white text-2xl font-black mb-1" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                            Вам доступно 2 гранта!
+                          </div>
+                          <div className="text-white/80 text-sm">Хотите использовать для этого ученика?</div>
+                        </div>
+                        <div className="bg-white p-8 space-y-4">
+                          {[
+                            { label: "Ученик", value: `${lastName} ${firstName}` },
+                            { label: "Школа №", value: schoolNum },
+                            { label: "Доступно грантов", value: "2" },
+                          ].map((row) => (
+                            <div key={row.label} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+                              <span className="text-gray-500">{row.label}</span>
+                              <span className="font-bold" style={{ color: "var(--kvan-text-dark)" }}>{row.value}</span>
+                            </div>
+                          ))}
+                          <div className="flex gap-3 mt-2">
+                            <button
+                              onClick={() => setGrantUsed(true)}
+                              className="flex-1 py-3 rounded-xl font-bold text-base transition-all hover:scale-[1.02] active:scale-95"
+                              style={{ background: "#22C55E", color: "#fff" }}
+                            >
+                              Да, использовать
+                            </button>
+                            <button
+                              onClick={() => setDiscountResult(null)}
+                              className="flex-1 py-3 rounded-xl font-bold text-base border-2 transition-all hover:bg-gray-50"
+                              style={{ borderColor: "var(--kvan-blue-dark)", color: "var(--kvan-blue-dark)" }}
+                            >
+                              Нет, позже
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   )}

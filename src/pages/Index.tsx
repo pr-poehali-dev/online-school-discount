@@ -142,12 +142,14 @@ export default function Index() {
           <div className="max-w-5xl mx-auto px-4 md:px-8 flex items-center justify-between h-16">
             <span className="text-xl font-black text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>🧠 КВАНТАСТИКА</span>
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.15)" }}>
-                <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: "var(--kvan-yellow)", color: "var(--kvan-text-dark)" }}>
-                  {userName[0]?.toUpperCase()}
-                </div>
-                <span className="text-white text-sm font-medium">{userName}</span>
-              </div>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full font-semibold text-sm transition-all hover:scale-105 active:scale-95"
+                style={{ background: "var(--kvan-yellow)", color: "var(--kvan-text-dark)" }}
+              >
+                <Icon name="ArrowLeft" size={14} />
+                На главную
+              </button>
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm border border-white/30 text-white hover:bg-white/10 transition-all"

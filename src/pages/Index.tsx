@@ -108,6 +108,7 @@ export default function Index() {
   const [schoolNum, setSchoolNum] = useState("");
   const [discountResult, setDiscountResult] = useState<null | "found" | "not_found">(null);
   const [discountValue, setDiscountValue] = useState(0);
+  const [grantUsed, setGrantUsed] = useState(false);
 
   const handleLogin = () => {
     if (loginEmail && loginPassword) {
@@ -127,6 +128,7 @@ export default function Index() {
   };
 
   const checkDiscount = () => {
+    setGrantUsed(false);
     if (isLoggedIn) {
       setDiscountResult("found");
       return;
@@ -555,7 +557,7 @@ export default function Index() {
                       </div>
                     </div>
                   )}
-                  {isLoggedIn && (
+                  {isLoggedIn && !grantUsed && (
                     <div className="p-6 rounded-2xl animate-pop" style={{ background: "linear-gradient(135deg, #4ADE80 0%, #22C55E 100%)" }}>
                       <div className="text-3xl mb-3">🎁</div>
                       <div className="text-white text-xl font-black mb-1" style={{ fontFamily: "'Oswald', sans-serif" }}>
@@ -566,16 +568,44 @@ export default function Index() {
                       </div>
                       <div className="flex gap-2">
                         <button
+                          onClick={() => setGrantUsed(true)}
                           className="px-5 py-2.5 rounded-xl font-semibold text-sm transition-all hover:scale-105 active:scale-95"
                           style={{ background: "#fff", color: "#22C55E" }}
                         >
                           Да, использовать
                         </button>
                         <button
+                          onClick={() => setDiscountResult(null)}
                           className="px-5 py-2.5 rounded-xl font-semibold text-sm border-2 border-white/50 text-white transition-all hover:bg-white/10"
                         >
                           Нет, позже
                         </button>
+                      </div>
+                    </div>
+                  )}
+                  {isLoggedIn && grantUsed && (
+                    <div className="p-6 rounded-2xl animate-pop" style={{ background: "linear-gradient(135deg, #6B7FFF 0%, #3A4DB5 100%)" }}>
+                      <div className="text-3xl mb-3">✅</div>
+                      <div className="text-white text-xl font-black mb-3" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                        Грант применён!
+                      </div>
+                      <div className="bg-white/15 rounded-xl p-4 text-left space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-white/70 text-sm">Ученик</span>
+                          <span className="text-white font-semibold text-sm">{lastName} {firstName}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-white/70 text-sm">Школа №</span>
+                          <span className="text-white font-semibold text-sm">{schoolNum}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-white/70 text-sm">Осталось грантов</span>
+                          <span className="text-white font-semibold text-sm">1</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-white/70 text-sm">Дата</span>
+                          <span className="text-white font-semibold text-sm">{new Date().toLocaleDateString("ru-RU")}</span>
+                        </div>
                       </div>
                     </div>
                   )}

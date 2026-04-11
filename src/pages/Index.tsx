@@ -4,7 +4,7 @@ import Icon from "@/components/ui/icon";
 const NAV_LINKS = [
   { label: "Главная", href: "#hero" },
   { label: "Курсы", href: "#courses" },
-  { label: "Скидки", href: "#discount" },
+  { label: "Грант", href: "#discount" },
   { label: "Отзывы", href: "#reviews" },
   { label: "О нас", href: "#about" },
   { label: "Контакты", href: "#contacts" },
@@ -216,7 +216,7 @@ export default function Index() {
                 href="#discount"
                 className="px-8 py-4 rounded-full font-bold text-lg border-2 border-white text-white transition-all hover:bg-white/10"
               >
-                Проверить скидку
+                Проверить грант
               </a>
             </div>
 
@@ -287,10 +287,10 @@ export default function Index() {
               Специальное предложение
             </span>
             <h2 className="text-4xl md:text-5xl font-black mt-4 mb-4" style={{ fontFamily: "'Oswald', sans-serif", color: "var(--kvan-text-dark)" }}>
-              ПРОВЕРИТЬ СКИДКУ
+              ПРОВЕРИТЬ ГРАНТ
             </h2>
             <p className="text-gray-500 max-w-xl mx-auto">
-              Введите фамилию и имя ребёнка, а также номер школы — мы покажем размер вашей персональной скидки.
+              Введите фамилию и имя ребёнка, а также номер школы — мы покажем размер вашего персонального гранта.
             </p>
           </div>
 
@@ -333,19 +333,19 @@ export default function Index() {
                   className="w-full py-4 rounded-xl font-bold text-lg transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
                   style={{ background: "var(--kvan-blue-dark)", color: "#fff" }}
                 >
-                  Проверить скидку 🎁
+                  Проверить грант 🎁
                 </button>
               </div>
 
               {discountResult === "found" && (
                 <div className="mt-6 p-6 rounded-2xl text-center animate-pop" style={{ background: "linear-gradient(135deg, #4ADE80 0%, #22C55E 100%)" }}>
                   <div className="text-5xl mb-2">🎉</div>
-                  <div className="text-white text-lg font-semibold">Скидка найдена!</div>
+                  <div className="text-white text-lg font-semibold">Грант найден!</div>
                   <div className="text-white text-5xl font-black my-2" style={{ fontFamily: "'Oswald', sans-serif" }}>
                     {discountValue}%
                   </div>
                   <div className="text-white/90 text-sm">
-                    Скидка применяется при записи на любой курс.<br />
+                    Грант применяется при записи на любой курс.<br />
                     Свяжитесь с нами для оформления.
                   </div>
                 </div>
@@ -353,9 +353,9 @@ export default function Index() {
               {discountResult === "not_found" && (
                 <div className="mt-6 p-6 rounded-2xl text-center animate-pop" style={{ background: "linear-gradient(135deg, #F9A8D4 0%, #EC4899 100%)" }}>
                   <div className="text-4xl mb-2">🤔</div>
-                  <div className="text-white font-semibold text-lg">Скидка не найдена</div>
+                  <div className="text-white font-semibold text-lg">Грант не найден</div>
                   <div className="text-white/90 text-sm mt-1">
-                    Возможно, данные введены неверно или скидка не предусмотрена для вашей школы. Свяжитесь с нами — разберёмся вместе!
+                    Возможно, данные введены неверно или грант не предусмотрен для вашей школы. Свяжитесь с нами — разберёмся вместе!
                   </div>
                 </div>
               )}

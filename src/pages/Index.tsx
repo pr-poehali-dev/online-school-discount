@@ -127,6 +127,10 @@ export default function Index() {
   };
 
   const checkDiscount = () => {
+    if (isLoggedIn) {
+      setDiscountResult("found");
+      return;
+    }
     const key = `${lastName.toLowerCase()} ${firstName.toLowerCase()} ${schoolNum}`.trim();
     const found = DISCOUNT_DB[key];
     if (found) {

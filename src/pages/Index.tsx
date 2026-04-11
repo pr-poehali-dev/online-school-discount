@@ -222,9 +222,9 @@ export default function Index() {
 
             <div className="flex flex-wrap gap-8 mt-14 animate-fade-up delay-400">
               {[
-                { n: "500+", label: "учеников" },
-                { n: "6", label: "направлений" },
-                { n: "3 года", label: "на рынке" },
+                { n: "2500+", label: "учеников" },
+                { n: "14", label: "направлений" },
+                { n: "8 лет", label: "на рынке" },
               ].map((s) => (
                 <div key={s.label}>
                   <div className="text-3xl font-black text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>{s.n}</div>
@@ -448,7 +448,7 @@ export default function Index() {
                   className="absolute -bottom-4 -left-4 px-4 py-2 rounded-2xl font-bold text-sm text-white"
                   style={{ background: "rgba(255,255,255,0.2)", backdropFilter: "blur(8px)" }}
                 >
-                  500+ выпускников
+                  2500+ выпускников
                 </div>
               </div>
             </div>

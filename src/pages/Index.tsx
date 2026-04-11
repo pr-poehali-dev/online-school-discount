@@ -584,27 +584,34 @@ export default function Index() {
                     </div>
                   )}
                   {isLoggedIn && grantUsed && (
-                    <div className="p-6 rounded-2xl animate-pop" style={{ background: "linear-gradient(135deg, #6B7FFF 0%, #3A4DB5 100%)" }}>
-                      <div className="text-3xl mb-3">✅</div>
-                      <div className="text-white text-xl font-black mb-3" style={{ fontFamily: "'Oswald', sans-serif" }}>
-                        Грант применён!
-                      </div>
-                      <div className="bg-white/15 rounded-xl p-4 text-left space-y-2">
-                        <div className="flex justify-between">
-                          <span className="text-white/70 text-sm">Ученик</span>
-                          <span className="text-white font-semibold text-sm">{lastName} {firstName}</span>
+                    <div className="fixed inset-0 z-[200] flex items-center justify-center px-4" style={{ background: "rgba(26,31,94,0.65)", backdropFilter: "blur(6px)" }}>
+                      <div className="w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-pop">
+                        <div className="p-8 text-center" style={{ background: "linear-gradient(135deg, #6B7FFF 0%, #3A4DB5 100%)" }}>
+                          <div className="text-5xl mb-4">✅</div>
+                          <div className="text-white text-2xl font-black mb-1" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                            Грант применён!
+                          </div>
+                          <div className="text-white/80 text-sm">Подтверждение использования гранта</div>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-white/70 text-sm">Школа №</span>
-                          <span className="text-white font-semibold text-sm">{schoolNum}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-white/70 text-sm">Осталось грантов</span>
-                          <span className="text-white font-semibold text-sm">1</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-white/70 text-sm">Дата</span>
-                          <span className="text-white font-semibold text-sm">{new Date().toLocaleDateString("ru-RU")}</span>
+                        <div className="bg-white p-8 space-y-4">
+                          {[
+                            { label: "Ученик", value: `${lastName} ${firstName}` },
+                            { label: "Школа №", value: schoolNum },
+                            { label: "Осталось грантов", value: "1" },
+                            { label: "Дата применения", value: new Date().toLocaleDateString("ru-RU") },
+                          ].map((row) => (
+                            <div key={row.label} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+                              <span className="text-gray-500">{row.label}</span>
+                              <span className="font-bold" style={{ color: "var(--kvan-text-dark)" }}>{row.value}</span>
+                            </div>
+                          ))}
+                          <button
+                            onClick={() => { setGrantUsed(false); setDiscountResult(null); }}
+                            className="mt-2 w-full py-3 rounded-xl font-bold text-base transition-all hover:scale-[1.02] active:scale-95"
+                            style={{ background: "var(--kvan-blue-dark)", color: "#fff" }}
+                          >
+                            Закрыть
+                          </button>
                         </div>
                       </div>
                     </div>

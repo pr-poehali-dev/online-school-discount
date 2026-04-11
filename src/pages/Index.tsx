@@ -98,6 +98,7 @@ const DISCOUNT_DB: Record<string, number> = {
 export default function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showCabinet, setShowCabinet] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -112,6 +113,7 @@ export default function Index() {
     if (loginEmail && loginPassword) {
       setUserName(loginEmail.split("@")[0] || loginEmail);
       setIsLoggedIn(true);
+      setShowCabinet(true);
       setLoginOpen(false);
       setLoginEmail("");
       setLoginPassword("");
@@ -120,6 +122,7 @@ export default function Index() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setShowCabinet(false);
     setUserName("");
   };
 
@@ -134,7 +137,7 @@ export default function Index() {
     }
   };
 
-  if (isLoggedIn) {
+  if (isLoggedIn && showCabinet) {
     return (
       <div className="min-h-screen" style={{ fontFamily: "'Golos Text', sans-serif", background: "var(--kvan-light)" }}>
         {/* Личный кабинет */}
@@ -143,7 +146,7 @@ export default function Index() {
             <span className="text-xl font-black text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>🧠 КВАНТАСТИКА</span>
             <div className="flex items-center gap-3">
               <button
-                onClick={handleLogout}
+                onClick={() => setShowCabinet(false)}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-full font-semibold text-sm transition-all hover:scale-105 active:scale-95"
                 style={{ background: "var(--kvan-yellow)", color: "var(--kvan-text-dark)" }}
               >
@@ -302,12 +305,15 @@ export default function Index() {
           <div className="hidden md:flex items-center gap-3">
             {isLoggedIn ? (
               <div className="flex items-center gap-2">
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.15)" }}>
+                <button
+                  onClick={() => setShowCabinet(true)}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-full transition-all hover:bg-white/20" style={{ background: "rgba(255,255,255,0.15)" }}
+                >
                   <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: "var(--kvan-yellow)", color: "var(--kvan-text-dark)" }}>
                     {userName[0]?.toUpperCase()}
                   </div>
                   <span className="text-white text-sm font-medium">{userName}</span>
-                </div>
+                </button>
                 <button
                   onClick={handleLogout}
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm transition-all hover:bg-white/10 border border-white/30"

@@ -97,6 +97,7 @@ const DISCOUNT_DB: Record<string, number> = {
 
 export default function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [schoolNum, setSchoolNum] = useState("");
@@ -135,13 +136,23 @@ export default function Index() {
             ))}
           </ul>
 
-          <a
-            href="#contacts"
-            className="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full font-semibold text-sm transition-all hover:scale-105 active:scale-95"
-            style={{ background: "var(--kvan-yellow)", color: "var(--kvan-text-dark)" }}
-          >
-            Записаться
-          </a>
+          <div className="hidden md:flex items-center gap-3">
+            <button
+              onClick={() => setIsLoggedIn(!isLoggedIn)}
+              className="flex items-center gap-2 px-4 py-2 rounded-full font-semibold text-sm transition-all hover:scale-105 active:scale-95 border-2 border-white/40 hover:border-white"
+              style={{ color: "#fff" }}
+            >
+              <Icon name={isLoggedIn ? "UserCheck" : "LogIn"} size={16} />
+              {isLoggedIn ? "Выйти" : "Войти"}
+            </button>
+            <a
+              href="#contacts"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-full font-semibold text-sm transition-all hover:scale-105 active:scale-95"
+              style={{ background: "var(--kvan-yellow)", color: "var(--kvan-text-dark)" }}
+            >
+              Записаться
+            </a>
+          </div>
 
           <button className="md:hidden text-white" onClick={() => setMenuOpen(!menuOpen)}>
             <Icon name={menuOpen ? "X" : "Menu"} size={24} />
@@ -338,16 +349,47 @@ export default function Index() {
               </div>
 
               {discountResult === "found" && (
-                <div className="mt-6 p-6 rounded-2xl text-center animate-pop" style={{ background: "linear-gradient(135deg, #4ADE80 0%, #22C55E 100%)" }}>
-                  <div className="text-5xl mb-2">🎉</div>
-                  <div className="text-white text-lg font-semibold">Грант найден!</div>
-                  <div className="text-white text-5xl font-black my-2" style={{ fontFamily: "'Oswald', sans-serif" }}>
-                    {discountValue}%
+                <div className="mt-6 space-y-3">
+                  <div className="p-6 rounded-2xl text-center animate-pop" style={{ background: "linear-gradient(135deg, #4ADE80 0%, #22C55E 100%)" }}>
+                    <div className="text-5xl mb-2">🎉</div>
+                    <div className="text-white text-lg font-semibold">Грант найден!</div>
+                    <div className="text-white text-5xl font-black my-2" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                      {discountValue}%
+                    </div>
+                    <div className="text-white/90 text-sm">
+                      Грант применяется при записи на любой курс.<br />
+                      Свяжитесь с нами для оформления.
+                    </div>
                   </div>
-                  <div className="text-white/90 text-sm">
-                    Грант применяется при записи на любой курс.<br />
-                    Свяжитесь с нами для оформления.
-                  </div>
+                  {isLoggedIn && (
+                    <div className="p-5 rounded-2xl animate-pop border-2" style={{ background: "#FFF9E6", borderColor: "var(--kvan-yellow)" }}>
+                      <div className="flex items-start gap-3">
+                        <span className="text-2xl">📋</span>
+                        <div>
+                          <div className="font-bold text-sm mb-1" style={{ color: "var(--kvan-text-dark)" }}>
+                            У вас осталось 2 гранта.
+                          </div>
+                          <div className="text-sm text-gray-600">
+                            Хотите использовать для этого ученика?
+                          </div>
+                          <div className="flex gap-2 mt-3">
+                            <button
+                              className="px-4 py-2 rounded-xl font-semibold text-sm transition-all hover:scale-105 active:scale-95"
+                              style={{ background: "var(--kvan-blue-dark)", color: "#fff" }}
+                            >
+                              Да, использовать
+                            </button>
+                            <button
+                              className="px-4 py-2 rounded-xl font-semibold text-sm border-2 transition-all hover:bg-gray-50"
+                              style={{ borderColor: "var(--kvan-blue-dark)", color: "var(--kvan-blue-dark)" }}
+                            >
+                              Нет, позже
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
               {discountResult === "not_found" && (

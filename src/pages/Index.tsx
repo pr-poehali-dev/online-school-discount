@@ -505,36 +505,6 @@ export default function Index() {
             <div className="bg-white rounded-3xl shadow-xl p-8 md:p-10">
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-semibold mb-2" style={{ color: "var(--kvan-text-dark)" }}>Фамилия</label>
-                  <input
-                    type="text"
-                    placeholder="Иванов"
-                    value={lastName}
-                    onChange={(e) => { setLastName(e.target.value); setDiscountResult(null); }}
-                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold mb-2" style={{ color: "var(--kvan-text-dark)" }}>Имя</label>
-                  <input
-                    type="text"
-                    placeholder="Иван"
-                    value={firstName}
-                    onChange={(e) => { setFirstName(e.target.value); setDiscountResult(null); }}
-                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold mb-2" style={{ color: "var(--kvan-text-dark)" }}>Отчество</label>
-                  <input
-                    type="text"
-                    placeholder="Иванович"
-                    value={patronymic}
-                    onChange={(e) => { setPatronymic(e.target.value); setDiscountResult(null); }}
-                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
-                  />
-                </div>
-                <div>
                   <label className="block text-sm font-semibold mb-2" style={{ color: "var(--kvan-text-dark)" }}>Город</label>
                   <input
                     type="text"
@@ -556,7 +526,7 @@ export default function Index() {
                 </div>
                 <button
                   onClick={checkDiscount}
-                  disabled={!firstName || !lastName || !city || !schoolNum}
+                  disabled={!city || !schoolNum}
                   className="w-full py-4 rounded-xl font-bold text-lg transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
                   style={{ background: "var(--kvan-blue-dark)", color: "#fff" }}
                 >
@@ -591,7 +561,6 @@ export default function Index() {
                         </div>
                         <div className="bg-white p-8 space-y-4">
                           {[
-                            { label: "Ученик", value: `${lastName} ${firstName}${patronymic ? ` ${patronymic}` : ""}` },
                             { label: "Город", value: city },
                             { label: "Школа", value: schoolNum },
                             { label: "Доступно грантов", value: "2" },
@@ -633,7 +602,6 @@ export default function Index() {
                         </div>
                         <div className="bg-white p-8 space-y-4">
                           {[
-                            { label: "Ученик", value: `${lastName} ${firstName}${patronymic ? ` ${patronymic}` : ""}` },
                             { label: "Город", value: city },
                             { label: "Школа", value: schoolNum },
                             { label: "Осталось грантов", value: "1" },
@@ -669,7 +637,6 @@ export default function Index() {
                     </div>
                     <div className="bg-white p-8 space-y-4">
                       {[
-                        { label: "Ученик", value: `${lastName} ${firstName}${patronymic ? ` ${patronymic}` : ""}` },
                         { label: "Город", value: city },
                         { label: "Школа", value: schoolNum },
                       ].map((row) => (

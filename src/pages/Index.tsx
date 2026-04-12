@@ -105,6 +105,8 @@ export default function Index() {
   const [userName, setUserName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [patronymic, setPatronymic] = useState("");
+  const [city, setCity] = useState("");
   const [schoolNum, setSchoolNum] = useState("");
   const [discountResult, setDiscountResult] = useState<null | "found" | "not_found">(null);
   const [discountValue, setDiscountValue] = useState(0);
@@ -523,10 +525,30 @@ export default function Index() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold mb-2" style={{ color: "var(--kvan-text-dark)" }}>Номер школы</label>
+                  <label className="block text-sm font-semibold mb-2" style={{ color: "var(--kvan-text-dark)" }}>Отчество</label>
                   <input
                     type="text"
-                    placeholder="42"
+                    placeholder="Иванович"
+                    value={patronymic}
+                    onChange={(e) => { setPatronymic(e.target.value); setDiscountResult(null); }}
+                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2" style={{ color: "var(--kvan-text-dark)" }}>Город</label>
+                  <input
+                    type="text"
+                    placeholder="Москва"
+                    value={city}
+                    onChange={(e) => { setCity(e.target.value); setDiscountResult(null); }}
+                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2" style={{ color: "var(--kvan-text-dark)" }}>№ школы или название</label>
+                  <input
+                    type="text"
+                    placeholder="42 или Гимназия №5"
                     value={schoolNum}
                     onChange={(e) => { setSchoolNum(e.target.value); setDiscountResult(null); }}
                     className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
@@ -534,7 +556,7 @@ export default function Index() {
                 </div>
                 <button
                   onClick={checkDiscount}
-                  disabled={!firstName || !lastName || !schoolNum}
+                  disabled={!firstName || !lastName || !city || !schoolNum}
                   className="w-full py-4 rounded-xl font-bold text-lg transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
                   style={{ background: "var(--kvan-blue-dark)", color: "#fff" }}
                 >
@@ -569,8 +591,9 @@ export default function Index() {
                         </div>
                         <div className="bg-white p-8 space-y-4">
                           {[
-                            { label: "Ученик", value: `${lastName} ${firstName}` },
-                            { label: "Школа №", value: schoolNum },
+                            { label: "Ученик", value: `${lastName} ${firstName}${patronymic ? ` ${patronymic}` : ""}` },
+                            { label: "Город", value: city },
+                            { label: "Школа", value: schoolNum },
                             { label: "Доступно грантов", value: "2" },
                           ].map((row) => (
                             <div key={row.label} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
@@ -610,8 +633,9 @@ export default function Index() {
                         </div>
                         <div className="bg-white p-8 space-y-4">
                           {[
-                            { label: "Ученик", value: `${lastName} ${firstName}` },
-                            { label: "Школа №", value: schoolNum },
+                            { label: "Ученик", value: `${lastName} ${firstName}${patronymic ? ` ${patronymic}` : ""}` },
+                            { label: "Город", value: city },
+                            { label: "Школа", value: schoolNum },
                             { label: "Осталось грантов", value: "1" },
                             { label: "Дата применения", value: new Date().toLocaleDateString("ru-RU") },
                           ].map((row) => (
@@ -645,8 +669,9 @@ export default function Index() {
                     </div>
                     <div className="bg-white p-8 space-y-4">
                       {[
-                        { label: "Ученик", value: `${lastName} ${firstName}` },
-                        { label: "Школа №", value: schoolNum },
+                        { label: "Ученик", value: `${lastName} ${firstName}${patronymic ? ` ${patronymic}` : ""}` },
+                        { label: "Город", value: city },
+                        { label: "Школа", value: schoolNum },
                       ].map((row) => (
                         <div key={row.label} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
                           <span className="text-gray-500">{row.label}</span>

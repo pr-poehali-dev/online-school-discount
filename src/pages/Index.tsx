@@ -111,6 +111,11 @@ export default function Index() {
   const [discountResult, setDiscountResult] = useState<null | "found" | "not_found">(null);
   const [discountValue, setDiscountValue] = useState(0);
   const [grantUsed, setGrantUsed] = useState(false);
+  const [showStudentForm, setShowStudentForm] = useState(false);
+  const [studentFio, setStudentFio] = useState("");
+  const [studentBirthday, setStudentBirthday] = useState("");
+  const [studentCity, setStudentCity] = useState("");
+  const [studentSchool, setStudentSchool] = useState("");
 
   const handleLogin = () => {
     if (loginEmail && loginPassword) {
@@ -559,7 +564,7 @@ export default function Index() {
                       </div>
                     </div>
                   )}
-                  {isLoggedIn && !grantUsed && (
+                  {isLoggedIn && !grantUsed && !showStudentForm && (
                     <div className="fixed inset-0 z-[200] flex items-center justify-center px-4" style={{ background: "rgba(26,31,94,0.65)", backdropFilter: "blur(6px)" }}>
                       <div className="w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-pop">
                         <div className="p-8 text-center" style={{ background: "linear-gradient(135deg, #4ADE80 0%, #22C55E 100%)" }}>
@@ -582,7 +587,7 @@ export default function Index() {
                           ))}
                           <div className="flex gap-3 mt-2">
                             <button
-                              onClick={() => setGrantUsed(true)}
+                              onClick={() => setShowStudentForm(true)}
                               className="flex-1 py-3 rounded-xl font-bold text-base transition-all hover:scale-[1.02] active:scale-95"
                               style={{ background: "#22C55E", color: "#fff" }}
                             >
@@ -594,6 +599,77 @@ export default function Index() {
                               style={{ borderColor: "var(--kvan-blue-dark)", color: "var(--kvan-blue-dark)" }}
                             >
                               Нет, позже
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {isLoggedIn && !grantUsed && showStudentForm && (
+                    <div className="fixed inset-0 z-[200] flex items-center justify-center px-4 overflow-y-auto py-6" style={{ background: "rgba(26,31,94,0.65)", backdropFilter: "blur(6px)" }}>
+                      <div className="w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-pop">
+                        <div className="p-8 text-center" style={{ background: "linear-gradient(135deg, #4ADE80 0%, #22C55E 100%)" }}>
+                          <div className="text-5xl mb-4">📋</div>
+                          <div className="text-white text-2xl font-black mb-1" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                            Данные ученика
+                          </div>
+                          <div className="text-white/80 text-sm">Заполните для применения гранта</div>
+                        </div>
+                        <div className="bg-white p-8 space-y-4">
+                          <div>
+                            <label className="block text-sm font-semibold mb-2" style={{ color: "var(--kvan-text-dark)" }}>ФИО</label>
+                            <input
+                              type="text"
+                              placeholder="Иванов Иван Иванович"
+                              value={studentFio}
+                              onChange={(e) => setStudentFio(e.target.value)}
+                              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-green-400 text-gray-700 transition-colors"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-semibold mb-2" style={{ color: "var(--kvan-text-dark)" }}>Дата рождения</label>
+                            <input
+                              type="date"
+                              value={studentBirthday}
+                              onChange={(e) => setStudentBirthday(e.target.value)}
+                              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-green-400 text-gray-700 transition-colors"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-semibold mb-2" style={{ color: "var(--kvan-text-dark)" }}>Город</label>
+                            <input
+                              type="text"
+                              placeholder="Москва"
+                              value={studentCity}
+                              onChange={(e) => setStudentCity(e.target.value)}
+                              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-green-400 text-gray-700 transition-colors"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-semibold mb-2" style={{ color: "var(--kvan-text-dark)" }}>№ школы или название</label>
+                            <input
+                              type="text"
+                              placeholder="42 или Гимназия №5"
+                              value={studentSchool}
+                              onChange={(e) => setStudentSchool(e.target.value)}
+                              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-green-400 text-gray-700 transition-colors"
+                            />
+                          </div>
+                          <div className="flex gap-3 mt-2">
+                            <button
+                              onClick={() => { if (studentFio && studentBirthday && studentCity && studentSchool) { setGrantUsed(true); setShowStudentForm(false); } }}
+                              disabled={!studentFio || !studentBirthday || !studentCity || !studentSchool}
+                              className="flex-1 py-3 rounded-xl font-bold text-base transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                              style={{ background: "#22C55E", color: "#fff" }}
+                            >
+                              Применить грант
+                            </button>
+                            <button
+                              onClick={() => setShowStudentForm(false)}
+                              className="flex-1 py-3 rounded-xl font-bold text-base border-2 transition-all hover:bg-gray-50"
+                              style={{ borderColor: "var(--kvan-blue-dark)", color: "var(--kvan-blue-dark)" }}
+                            >
+                              Назад
                             </button>
                           </div>
                         </div>
@@ -612,8 +688,10 @@ export default function Index() {
                         </div>
                         <div className="bg-white p-8 space-y-4">
                           {[
-                            { label: "Город", value: city },
-                            { label: "Школа", value: schoolNum },
+                            { label: "ФИО", value: studentFio },
+                            { label: "Дата рождения", value: studentBirthday ? new Date(studentBirthday).toLocaleDateString("ru-RU") : "" },
+                            { label: "Город", value: studentCity },
+                            { label: "Школа", value: studentSchool },
                             { label: "Осталось грантов", value: "1" },
                             { label: "Дата применения", value: new Date().toLocaleDateString("ru-RU") },
                           ].map((row) => (
@@ -623,7 +701,7 @@ export default function Index() {
                             </div>
                           ))}
                           <button
-                            onClick={() => { setGrantUsed(false); setDiscountResult(null); }}
+                            onClick={() => { setGrantUsed(false); setDiscountResult(null); setStudentFio(""); setStudentBirthday(""); setStudentCity(""); setStudentSchool(""); }}
                             className="mt-2 w-full py-3 rounded-xl font-bold text-base transition-all hover:scale-[1.02] active:scale-95"
                             style={{ background: "var(--kvan-blue-dark)", color: "#fff" }}
                           >

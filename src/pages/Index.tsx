@@ -131,18 +131,7 @@ export default function Index() {
 
   const checkDiscount = () => {
     setGrantUsed(false);
-    if (isLoggedIn) {
-      setDiscountResult("found");
-      return;
-    }
-    const key = `${lastName.toLowerCase()} ${firstName.toLowerCase()} ${schoolNum}`.trim();
-    const found = DISCOUNT_DB[key];
-    if (found) {
-      setDiscountValue(found);
-      setDiscountResult("found");
-    } else {
-      setDiscountResult("not_found");
-    }
+    setDiscountResult("found");
   };
 
   if (isLoggedIn && showCabinet) {

@@ -537,15 +537,36 @@ export default function Index() {
               {discountResult === "found" && (
                 <div className="mt-6 space-y-3">
                   {!isLoggedIn && (
-                    <div className="p-6 rounded-2xl text-center animate-pop" style={{ background: "linear-gradient(135deg, #4ADE80 0%, #22C55E 100%)" }}>
-                      <div className="text-5xl mb-2">🎉</div>
-                      <div className="text-white text-lg font-semibold">Грант найден!</div>
-                      <div className="text-white text-5xl font-black my-2" style={{ fontFamily: "'Oswald', sans-serif" }}>
-                        {discountValue}%
-                      </div>
-                      <div className="text-white/90 text-sm">
-                        Грант применяется при записи на любой курс.<br />
-                        Свяжитесь с нами для оформления.
+                    <div className="fixed inset-0 z-[200] flex items-center justify-center px-4" style={{ background: "rgba(26,31,94,0.65)", backdropFilter: "blur(6px)" }}>
+                      <div className="w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-pop">
+                        <div className="p-8 text-center" style={{ background: "linear-gradient(135deg, #F97316 0%, #EA580C 100%)" }}>
+                          <div className="text-5xl mb-4">😔</div>
+                          <div className="text-white text-2xl font-black mb-1" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                            Гранты закончились
+                          </div>
+                          <div className="text-white/80 text-sm">Остаток по школе исчерпан</div>
+                        </div>
+                        <div className="bg-white p-8 space-y-4">
+                          {[
+                            { label: "Город", value: city },
+                            { label: "Школа", value: schoolNum },
+                            { label: "Выделено грантов", value: "200" },
+                            { label: "Остаток", value: "0 / 200" },
+                          ].map((row) => (
+                            <div key={row.label} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+                              <span className="text-gray-500">{row.label}</span>
+                              <span className="font-bold" style={{ color: row.label === "Остаток" ? "#EA580C" : "var(--kvan-text-dark)" }}>{row.value}</span>
+                            </div>
+                          ))}
+                          <p className="text-gray-400 text-sm pt-1">Для данной школы было выделено 200 грантов на льготное обучение. К сожалению, все они уже использованы. Свяжитесь с нами — возможно, мы сможем помочь!</p>
+                          <button
+                            onClick={() => setDiscountResult(null)}
+                            className="w-full py-3 rounded-xl font-bold text-base transition-all hover:scale-[1.02] active:scale-95"
+                            style={{ background: "var(--kvan-blue-dark)", color: "#fff" }}
+                          >
+                            Закрыть
+                          </button>
+                        </div>
                       </div>
                     </div>
                   )}

@@ -201,18 +201,18 @@ export default function Index() {
             </h2>
             <div className="space-y-2">
               {[
-                { date: "14 апр, пн", lessons: [{ time: "10:00", group: "Python — Группа A", room: "Каб. 3" }, { time: "14:00", group: "Веб-разработка — Группа B", room: "Каб. 1" }] },
-                { date: "15 апр, вт", lessons: [{ time: "11:00", group: "Робототехника — Группа C", room: "Каб. 5" }] },
-                { date: "16 апр, ср", lessons: [{ time: "10:00", group: "Python — Группа A", room: "Каб. 3" }, { time: "16:00", group: "ИИ — Группа D", room: "Каб. 2" }] },
-                { date: "17 апр, чт", lessons: [{ time: "11:00", group: "Веб-разработка — Группа B", room: "Каб. 1" }] },
-                { date: "18 апр, пт", lessons: [{ time: "10:00", group: "Разработка игр — Группа E", room: "Каб. 4" }, { time: "13:00", group: "Кибербезопасность — Группа F", room: "Каб. 2" }] },
-                { date: "19 апр, сб", lessons: [{ time: "10:00", group: "Робототехника — Группа C", room: "Каб. 5" }] },
-                { date: "21 апр, пн", lessons: [{ time: "10:00", group: "Python — Группа A", room: "Каб. 3" }, { time: "14:00", group: "Веб-разработка — Группа B", room: "Каб. 1" }] },
-                { date: "22 апр, вт", lessons: [{ time: "11:00", group: "Робототехника — Группа C", room: "Каб. 5" }] },
-                { date: "23 апр, ср", lessons: [{ time: "10:00", group: "Python — Группа A", room: "Каб. 3" }, { time: "16:00", group: "ИИ — Группа D", room: "Каб. 2" }] },
-                { date: "24 апр, чт", lessons: [{ time: "11:00", group: "Веб-разработка — Группа B", room: "Каб. 1" }] },
-                { date: "25 апр, пт", lessons: [{ time: "10:00", group: "Разработка игр — Группа E", room: "Каб. 4" }, { time: "13:00", group: "Кибербезопасность — Группа F", room: "Каб. 2" }] },
-                { date: "26 апр, сб", lessons: [{ time: "10:00", group: "Робототехника — Группа C", room: "Каб. 5" }] },
+                { date: "14 апр, пн", lessons: [{ time: "10:00", group: "Scratch — Группа A", room: "Каб. 1" }, { time: "14:00", group: "App Inventor — Группа B", room: "Каб. 2" }] },
+                { date: "15 апр, вт", lessons: [{ time: "11:00", group: "Kodu Game Lab — Группа C", room: "Каб. 3" }] },
+                { date: "16 апр, ср", lessons: [{ time: "10:00", group: "Unity — Группа D", room: "Каб. 4" }, { time: "15:00", group: "Unreal Engine — Группа E", room: "Каб. 5" }] },
+                { date: "17 апр, чт", lessons: [{ time: "11:00", group: "Python — Группа F", room: "Каб. 3" }, { time: "14:00", group: "CSS, HTML — Группа G", room: "Каб. 1" }] },
+                { date: "18 апр, пт", lessons: [{ time: "10:00", group: "Scratch — Группа A", room: "Каб. 1" }, { time: "13:00", group: "Kodu Game Lab — Группа C", room: "Каб. 3" }] },
+                { date: "19 апр, сб", lessons: [{ time: "10:00", group: "App Inventor — Группа B", room: "Каб. 2" }, { time: "12:00", group: "Python — Группа F", room: "Каб. 3" }] },
+                { date: "21 апр, пн", lessons: [{ time: "10:00", group: "Scratch — Группа A", room: "Каб. 1" }, { time: "14:00", group: "App Inventor — Группа B", room: "Каб. 2" }] },
+                { date: "22 апр, вт", lessons: [{ time: "11:00", group: "Kodu Game Lab — Группа C", room: "Каб. 3" }] },
+                { date: "23 апр, ср", lessons: [{ time: "10:00", group: "Unity — Группа D", room: "Каб. 4" }, { time: "15:00", group: "Unreal Engine — Группа E", room: "Каб. 5" }] },
+                { date: "24 апр, чт", lessons: [{ time: "11:00", group: "Python — Группа F", room: "Каб. 3" }, { time: "14:00", group: "CSS, HTML — Группа G", room: "Каб. 1" }] },
+                { date: "25 апр, пт", lessons: [{ time: "10:00", group: "Scratch — Группа A", room: "Каб. 1" }, { time: "13:00", group: "Kodu Game Lab — Группа C", room: "Каб. 3" }] },
+                { date: "26 апр, сб", lessons: [{ time: "10:00", group: "App Inventor — Группа B", room: "Каб. 2" }, { time: "12:00", group: "CSS, HTML — Группа G", room: "Каб. 1" }] },
               ].map((day) => (
                 <div key={day.date} className="rounded-xl overflow-hidden border border-gray-100">
                   <div className="px-4 py-2 flex items-center gap-2" style={{ background: "var(--kvan-light)" }}>

@@ -175,11 +175,11 @@ export default function Index() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
             <div className="bg-white rounded-2xl p-6 shadow-sm flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: "#6B7FFF22" }}>
-                <Icon name="CalendarDays" fallback="Calendar" size={22} style={{ color: "var(--kvan-blue)" }} />
+                <Icon name="BadgeCheck" fallback="User" size={22} style={{ color: "var(--kvan-blue)" }} />
               </div>
               <div>
-                <div className="text-xs text-gray-400 mb-0.5">Дата приёма на работу</div>
-                <div className="text-xl font-black" style={{ fontFamily: "'Oswald', sans-serif", color: "var(--kvan-text-dark)" }}>25.02.2019</div>
+                <div className="text-xs text-gray-400 mb-0.5">Должность</div>
+                <div className="text-base font-black" style={{ fontFamily: "'Oswald', sans-serif", color: "var(--kvan-text-dark)" }}>Преподаватель (куратор группы)</div>
               </div>
             </div>
             <div className="bg-white rounded-2xl p-6 shadow-sm flex items-center gap-4">

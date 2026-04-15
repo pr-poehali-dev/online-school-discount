@@ -379,14 +379,6 @@ export default function Index() {
 
         <div className="relative max-w-6xl mx-auto px-4 md:px-8 py-20 md:py-32">
           <div className="max-w-2xl">
-            <div
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold mb-6 animate-fade-up"
-              style={{ background: "var(--kvan-yellow)", color: "var(--kvan-text-dark)" }}
-            >
-              <span className="pulse-dot w-2 h-2 rounded-full bg-green-500 inline-block" />
-              Набор открыт — 2026
-            </div>
-
             <h1
               className="text-5xl md:text-7xl font-black text-white leading-tight mb-6 animate-fade-up delay-100"
               style={{ fontFamily: "'Oswald', sans-serif", textShadow: "0 4px 24px rgba(0,0,0,0.3)" }}

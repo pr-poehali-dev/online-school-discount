@@ -886,8 +886,9 @@ export default function Index() {
 
             <div className="space-y-5">
               {[
-                { icon: "Phone", label: "Телефон", value: "+7 (800) 123-45-67", sub: "Бесплатно по России" },
-                { icon: "Mail", label: "Email", value: "hello@kvantastika.ru", sub: "Ответим в течение часа" },
+                { icon: "Phone", label: "Телефон", value: "+7 (495) 148-58-11", sub: "Общие вопросы" },
+                { icon: "Phone", label: "Отдел продаж", value: "+7 (499) 705-57-77", sub: "Отдел продаж" },
+                { icon: "Mail", label: "Email", value: "director@kvantastica.ru", sub: "Ответим в течение часа" },
                 { icon: "MapPin", label: "Адрес", value: "Москва, ул. Академика Королёва, 12", sub: "Пн–Сб: 9:00 – 20:00" },
                 { icon: "MessageCircle", label: "Telegram", value: "@kvantastika", sub: "Пишите в любое время" },
               ].map((c) => (

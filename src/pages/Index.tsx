@@ -193,38 +193,34 @@ export default function Index() {
             </div>
           </div>
 
-          {/* Расписание на 2 недели */}
+          {/* График занятий по группам */}
           <div className="bg-white rounded-2xl p-6 shadow-sm">
             <h2 className="font-bold text-lg mb-5 flex items-center gap-2" style={{ color: "var(--kvan-text-dark)" }}>
               <Icon name="BookOpen" fallback="Calendar" size={20} style={{ color: "var(--kvan-blue-dark)" }} />
-              График уроков на ближайшие 2 недели
+              График занятий по группам
             </h2>
-            <div className="space-y-2">
+            <div className="space-y-3">
               {[
-                { date: "15 апр, вт", lessons: [{ time: "10:00", group: "Scratch — Группа A", room: "Каб. 1" }, { time: "14:00", group: "App Inventor — Группа B", room: "Каб. 2" }] },
-                { date: "16 апр, ср", lessons: [{ time: "11:00", group: "Kodu Game Lab — Группа C", room: "Каб. 3" }, { time: "15:00", group: "Unity — Группа D", room: "Каб. 4" }] },
-                { date: "17 апр, чт", lessons: [{ time: "10:00", group: "Unreal Engine — Группа E", room: "Каб. 5" }, { time: "14:00", group: "Python — Группа F", room: "Каб. 3" }] },
-                { date: "18 апр, пт", lessons: [{ time: "11:00", group: "CSS, HTML — Группа G", room: "Каб. 1" }, { time: "15:00", group: "Scratch — Группа A", room: "Каб. 1" }] },
-                { date: "19 апр, сб", lessons: [{ time: "10:00", group: "App Inventor — Группа B", room: "Каб. 2" }, { time: "13:00", group: "Kodu Game Lab — Группа C", room: "Каб. 3" }] },
-                { date: "21 апр, пн", lessons: [{ time: "10:00", group: "Unity — Группа D", room: "Каб. 4" }, { time: "14:00", group: "Python — Группа F", room: "Каб. 3" }] },
-                { date: "22 апр, вт", lessons: [{ time: "10:00", group: "Scratch — Группа A", room: "Каб. 1" }, { time: "14:00", group: "Unreal Engine — Группа E", room: "Каб. 5" }] },
-                { date: "23 апр, ср", lessons: [{ time: "11:00", group: "App Inventor — Группа B", room: "Каб. 2" }, { time: "15:00", group: "CSS, HTML — Группа G", room: "Каб. 1" }] },
-                { date: "24 апр, чт", lessons: [{ time: "10:00", group: "Kodu Game Lab — Группа C", room: "Каб. 3" }, { time: "14:00", group: "Unity — Группа D", room: "Каб. 4" }] },
-                { date: "25 апр, пт", lessons: [{ time: "11:00", group: "Python — Группа F", room: "Каб. 3" }, { time: "15:00", group: "Unreal Engine — Группа E", room: "Каб. 5" }] },
-                { date: "26 апр, сб", lessons: [{ time: "10:00", group: "Scratch — Группа A", room: "Каб. 1" }, { time: "13:00", group: "CSS, HTML — Группа G", room: "Каб. 1" }] },
-                { date: "28 апр, пн", lessons: [{ time: "10:00", group: "App Inventor — Группа B", room: "Каб. 2" }, { time: "14:00", group: "Kodu Game Lab — Группа C", room: "Каб. 3" }] },
-              ].map((day) => (
-                <div key={day.date} className="rounded-xl overflow-hidden border border-gray-100">
+                { module: "Scratch", groups: [{ name: "Группа A (7–9 лет)", time: "10:00", room: "Каб. 1", hours: 32 }, { name: "Группа B (10–12 лет)", time: "14:00", room: "Каб. 2", hours: 24 }] },
+                { module: "App Inventor", groups: [{ name: "Группа C (10–13 лет)", time: "11:00", room: "Каб. 2", hours: 28 }, { name: "Группа D (14–16 лет)", time: "15:00", room: "Каб. 3", hours: 20 }] },
+                { module: "Kodu Game Lab", groups: [{ name: "Группа E (8–11 лет)", time: "10:00", room: "Каб. 3", hours: 24 }, { name: "Группа F (12–14 лет)", time: "13:00", room: "Каб. 4", hours: 16 }] },
+                { module: "Unity", groups: [{ name: "Группа G (12–15 лет)", time: "10:00", room: "Каб. 4", hours: 48 }, { name: "Группа H (16+ лет)", time: "15:00", room: "Каб. 5", hours: 64 }] },
+                { module: "Unreal Engine", groups: [{ name: "Группа I (14–16 лет)", time: "11:00", room: "Каб. 5", hours: 56 }, { name: "Группа J (16+ лет)", time: "16:00", room: "Каб. 5", hours: 72 }] },
+                { module: "Python", groups: [{ name: "Группа K (10–12 лет)", time: "10:00", room: "Каб. 3", hours: 40 }, { name: "Группа L (13–16 лет)", time: "14:00", room: "Каб. 3", hours: 48 }, { name: "Группа M (16+ лет)", time: "17:00", room: "Каб. 3", hours: 64 }] },
+                { module: "CSS, HTML", groups: [{ name: "Группа N (11–13 лет)", time: "11:00", room: "Каб. 1", hours: 32 }, { name: "Группа O (14–16 лет)", time: "15:00", room: "Каб. 1", hours: 40 }] },
+              ].map((item) => (
+                <div key={item.module} className="rounded-xl overflow-hidden border border-gray-100">
                   <div className="px-4 py-2 flex items-center gap-2" style={{ background: "var(--kvan-light)" }}>
-                    <Icon name="Calendar" size={14} style={{ color: "var(--kvan-blue-dark)" }} />
-                    <span className="font-semibold text-sm" style={{ color: "var(--kvan-text-dark)" }}>{day.date}</span>
+                    <Icon name="Layers" size={14} style={{ color: "var(--kvan-blue-dark)" }} />
+                    <span className="font-semibold text-sm" style={{ color: "var(--kvan-text-dark)" }}>{item.module}</span>
                   </div>
                   <div className="divide-y divide-gray-50">
-                    {day.lessons.map((l) => (
-                      <div key={l.time + l.group} className="px-4 py-3 flex items-center gap-4 bg-white">
-                        <span className="text-sm font-bold w-12 shrink-0" style={{ color: "var(--kvan-blue-dark)" }}>{l.time}</span>
-                        <span className="text-sm text-gray-700 flex-1">{l.group}</span>
-                        <span className="text-xs px-2 py-1 rounded-lg font-medium" style={{ background: "var(--kvan-light)", color: "var(--kvan-text-dark)" }}>{l.room}</span>
+                    {item.groups.map((g) => (
+                      <div key={g.name} className="px-4 py-3 flex items-center gap-3 bg-white">
+                        <span className="text-sm text-gray-700 flex-1">{g.name}</span>
+                        <span className="text-sm font-bold shrink-0" style={{ color: "var(--kvan-blue-dark)" }}>{g.time}</span>
+                        <span className="text-xs px-2 py-1 rounded-lg font-medium shrink-0" style={{ background: "var(--kvan-light)", color: "var(--kvan-text-dark)" }}>{g.room}</span>
+                        <span className="text-xs px-2 py-1 rounded-lg font-medium shrink-0 bg-blue-50 text-blue-600">{g.hours} ч</span>
                       </div>
                     ))}
                   </div>

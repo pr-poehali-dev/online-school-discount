@@ -102,6 +102,7 @@ export default function Index() {
   const [loginOpen, setLoginOpen] = useState(false);
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const [loginError, setLoginError] = useState(false);
   const [userName, setUserName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -118,13 +119,16 @@ export default function Index() {
   const [studentSchool, setStudentSchool] = useState("");
 
   const handleLogin = () => {
-    if (loginEmail && loginPassword) {
-      setUserName(loginEmail.split("@")[0] || loginEmail);
+    if (loginEmail === "квант-админ" && loginPassword === "одобрено") {
+      setUserName("квант-админ");
       setIsLoggedIn(true);
       setShowCabinet(true);
       setLoginOpen(false);
       setLoginEmail("");
       setLoginPassword("");
+      setLoginError(false);
+    } else if (loginEmail && loginPassword) {
+      setLoginError(true);
     }
   };
 
@@ -252,7 +256,7 @@ export default function Index() {
                   type="text"
                   placeholder="Введите логин"
                   value={loginEmail}
-                  onChange={(e) => setLoginEmail(e.target.value)}
+                  onChange={(e) => { setLoginEmail(e.target.value); setLoginError(false); }}
                   onKeyDown={(e) => e.key === "Enter" && handleLogin()}
                   className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
                   autoFocus
@@ -264,11 +268,14 @@ export default function Index() {
                   type="password"
                   placeholder="Введите пароль"
                   value={loginPassword}
-                  onChange={(e) => setLoginPassword(e.target.value)}
+                  onChange={(e) => { setLoginPassword(e.target.value); setLoginError(false); }}
                   onKeyDown={(e) => e.key === "Enter" && handleLogin()}
                   className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-400 text-gray-700 transition-colors"
                 />
               </div>
+              {loginError && (
+                <div className="text-red-500 text-sm font-medium text-center">Неверный логин или пароль</div>
+              )}
               <button
                 onClick={handleLogin}
                 disabled={!loginEmail || !loginPassword}

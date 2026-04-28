@@ -119,8 +119,10 @@ export default function Index() {
   const [studentSchool, setStudentSchool] = useState("");
 
   const handleLogin = () => {
-    if (loginEmail === "квант-админ" && loginPassword === "одобрено") {
-      setUserName("квант-админ");
+    const isAdmin = loginEmail === "квант-админ" && loginPassword === "одобрено";
+    const isBaranenko = loginEmail === "Бараненко.Олег" && loginPassword.length > 0;
+    if (isAdmin || isBaranenko) {
+      setUserName(loginEmail);
       setIsLoggedIn(true);
       setShowCabinet(true);
       setLoginOpen(false);

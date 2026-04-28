@@ -143,6 +143,7 @@ export default function Index() {
       setIsLoggedIn(true);
       setShowCabinet(true);
       setLoginOpen(false);
+      window.scrollTo(0, 0);
       setLoginEmail("");
       setLoginPassword("");
       setLoginError(false);
@@ -155,6 +156,7 @@ export default function Index() {
     setIsLoggedIn(false);
     setShowCabinet(false);
     setUserName("");
+    window.scrollTo(0, 0);
   };
 
   const checkDiscount = () => {
@@ -171,7 +173,7 @@ export default function Index() {
             <span className="text-xl font-black text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>🧠 КВАНТАСТИКА</span>
             <div className="flex items-center gap-3">
               <button
-                onClick={() => setShowCabinet(false)}
+                onClick={() => { setShowCabinet(false); window.scrollTo(0, 0); }}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-full font-semibold text-sm transition-all hover:scale-105 active:scale-95"
                 style={{ background: "var(--kvan-yellow)", color: "var(--kvan-text-dark)" }}
               >

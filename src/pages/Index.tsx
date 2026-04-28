@@ -609,6 +609,14 @@ export default function Index() {
                               <span className="font-bold" style={{ color: "var(--kvan-text-dark)" }}>{row.value}</span>
                             </div>
                           ))}
+                          {userName === "Бараненко.Олег" && (
+                            <div className="flex items-start gap-3 px-4 py-3 rounded-xl" style={{ background: "#FEF3C7" }}>
+                              <Icon name="AlertTriangle" fallback="AlertCircle" size={18} className="shrink-0 mt-0.5" style={{ color: "#D97706" }} />
+                              <div className="text-sm font-semibold" style={{ color: "#92400E" }}>
+                                Внимание! Срок действия грантов истекает через <span className="font-black">1 день 12 часов 37 минут</span>
+                              </div>
+                            </div>
+                          )}
                           <div className="flex gap-3 mt-2">
                             <button
                               onClick={() => setShowStudentForm(true)}

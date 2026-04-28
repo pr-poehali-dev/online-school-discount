@@ -177,6 +177,33 @@ export default function Index() {
             Личный кабинет
           </h1>
 
+          {/* Карточка преподавателя Бараненко */}
+          {userName === "Бараненко.Олег" && (
+            <div className="bg-white rounded-2xl p-6 shadow-sm mb-8 flex flex-col sm:flex-row gap-6 items-start">
+              <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0" style={{ background: "var(--kvan-light)" }}>
+                <Icon name="UserCircle" fallback="User" size={32} style={{ color: "var(--kvan-blue-dark)" }} />
+              </div>
+              <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <div className="text-xs text-gray-400 mb-0.5">ФИО</div>
+                  <div className="font-bold text-base" style={{ color: "var(--kvan-text-dark)" }}>Бараненко Олег Юрьевич</div>
+                </div>
+                <div>
+                  <div className="text-xs text-gray-400 mb-0.5">Город</div>
+                  <div className="font-semibold" style={{ color: "var(--kvan-text-dark)" }}>г. Краснодар</div>
+                </div>
+                <div>
+                  <div className="text-xs text-gray-400 mb-0.5">Формат обучения</div>
+                  <div className="font-semibold" style={{ color: "var(--kvan-text-dark)" }}>Групповые занятия</div>
+                </div>
+                <div>
+                  <div className="text-xs text-gray-400 mb-0.5">Свободные места в группе</div>
+                  <div className="font-black text-xl" style={{ fontFamily: "'Oswald', sans-serif", color: "var(--kvan-blue-dark)" }}>2</div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Статистика */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
             <div className="bg-white rounded-2xl p-6 shadow-sm flex items-center gap-4">

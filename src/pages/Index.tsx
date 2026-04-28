@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
 const NAV_LINKS = [
@@ -117,6 +117,23 @@ export default function Index() {
   const [studentBirthday, setStudentBirthday] = useState("");
   const [studentCity, setStudentCity] = useState("");
   const [studentSchool, setStudentSchool] = useState("");
+
+  const GRANT_DEADLINE = useRef(Date.now() + (1 * 86400 + 12 * 3600 + 37 * 60) * 1000);
+  const [grantTimeLeft, setGrantTimeLeft] = useState("");
+
+  useEffect(() => {
+    const tick = () => {
+      const diff = Math.max(0, GRANT_DEADLINE.current - Date.now());
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      setGrantTimeLeft(`${d} дн ${h} ч ${m} мин ${s} сек`);
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
 
   const handleLogin = () => {
     const isAdmin = loginEmail === "квант-админ" && loginPassword === "одобрено";
@@ -613,7 +630,7 @@ export default function Index() {
                             <div className="flex items-start gap-3 px-4 py-3 rounded-xl" style={{ background: "#FEF3C7" }}>
                               <Icon name="AlertTriangle" fallback="AlertCircle" size={18} className="shrink-0 mt-0.5" style={{ color: "#D97706" }} />
                               <div className="text-sm font-semibold" style={{ color: "#92400E" }}>
-                                Внимание! Срок действия грантов истекает через <span className="font-black">1 день 12 часов 37 минут</span>
+                                Внимание! Срок действия грантов истекает через <span className="font-black">{grantTimeLeft}</span>
                               </div>
                             </div>
                           )}
